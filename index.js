@@ -8,6 +8,8 @@ const { checkForAuthenticationCookie } = require("./middlewares/authentication")
 
 const blogRoute = require('./routes/blog');
 
+const Blog = require('./models/blog')
+
 const app = express();
 const PORT = 8000
 mongoose.connect('mongodb://localhost:27017/blogzilla').then( (e) => {
@@ -20,11 +22,13 @@ app.set("views", path.resolve("./views"));
 app.use(express.urlencoded({extended:false}));  //to handle form data
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie('token'));
+app.use(express.static(path.resolve('./public')))
 
-
-app.get("/", (req, res) =>{
+app.get("/", async (req, res) =>{
+    const allBlogs = await Blog.find({});
     return res.render('home', {
         user: req.user,
+        blogs: allBlogs,
     })
 })
 

@@ -1,5 +1,21 @@
 const express = require('express');
 const Blog = require('../models/blog');
+const path = require('path');
+
+// Multer Imports
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.resolve(`./public/uploads/`))
+  },
+  filename: function (req, file, cb) {
+    const filename = `${Date.now()}-${file.originalname}`
+    cb(null, filename)
+  }
+})
+
+const upload = multer({ storage: storage })
 
 const router = express.Router();
 
@@ -9,16 +25,20 @@ router.get('/add-new', (req, res) => {
     })
 })
 
-router.post('/add-new', async (req, res) => {
+router.post('/', upload.single("coverImage"), async (req, res) => {
     console.log(req.body);
     const {title, body} = req.body;
 
-    await Blog.create({
+    const blog = await Blog.create({
         title,
         body,
+        coverImageURL: `/uploads/${req.file.filename}`,
+        createdBy: req.user._id,
     })
-    return res.redirect('/')
-})
+    return res.redirect(`blog/${blog._id}`)
+});
+
+
 module.exports = router;
 
 
