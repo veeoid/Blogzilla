@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Add New Blog Page</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+
+    <form method="post" action="/blog/add-new">
+        <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Add Title..">
+        <label for="title">Title</label>
+    </div>
+    <div class="form-floating mb-3">
+        <textarea class="form-control" placeholder="Add content here" id="body" name="body" style="height: 100px"></textarea>
+        <label for="body">Body</label>
+    </div>
+    </div>
+        <button type="submit" class="btn btn-primary mx-auto p-2" style="width: 20%; margin-left: 10px;">Add</button>
+    </form>
+
+    <%- include('./partials/scripts') %>
+</body>
+    
+</html>
