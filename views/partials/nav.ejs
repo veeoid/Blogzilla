@@ -23,12 +23,14 @@
           <li><a class="dropdown-item" href="/user/signout" method="get" action="signout">Sign Out</a></li>
           </ul>
           <% } else { %>
+            <div class="d-flex" style="margin-right: 5px ;">
             <form class="d-flex" action="/user/signin">
               <button class="btn btn-outline-success" type="submit">Sign In</button>
             </form>
             <form class="d-flex" action="/user/signup">
               <button class="btn btn-outline-success" type="submit">Sign Up</button>
             </form>
+            </div>
           <% } %>
           
           
