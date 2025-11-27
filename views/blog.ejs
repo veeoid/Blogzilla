@@ -31,7 +31,7 @@
         
     </div>
     <div class="container-xl">
-        <img src="/<%= blog.createdBy.profileImageURL %>" width="15%" class="img-thumbnail" >
+        <img src="/<%= blog.createdBy.profileImageURL %>" width="15%" class="img-thumbnail">
         <%= blog.createdBy.firstName %> <%= blog.createdBy.lastName %>
     </div>
     <div class="container-xl">
@@ -53,6 +53,7 @@
                     <%= comment.content %>
                     </div>
                     <div class="commented-by" style="font-weight: 100; font-size: small; background-color: aliceblue;" >
+                        <img src="/<%= comment.createdBy.profileImageURL %> " width="30px">
                         Commented by: @<%= comment.createdBy.username %>
                     </div>
                 </div>
