@@ -12,12 +12,7 @@
         body{
             background-color: aliceblue;
         }
-        #comment-card{
-            padding: 0 auto;
-            margin: 0;
-            border: 5px;
-            background-color: beige;
-        }
+
 
     </style>
 </head>
@@ -43,26 +38,28 @@
         <h4>Comments</h4>
     </div>
     <div class="card">
-    <form class="container-xl" action="/blog/comment/<%= blog._id %>" method="post">
-        <div class="form-data">
-            <textarea class="form-control"  name="content" id="content" style="height: 100px"></textarea>
-        </div>
-        <button class="btn btn-primary" style="margin-top: 10px;">Post</button>
-    </form>
-    <div class="container-xl">
-        <% comments.forEach(comment => { %>
-        <div class="card row" id="comment-card">
-            <textarea id="comment-content" disabled>
-                <%= comment.content.trim() %>
-            </textarea>
-            <div>
-                @<%= comment.createdBy.username %>
+
+        <form class="container-xl" action="/blog/comment/<%= blog._id %>" method="post">
+            <div class="form-data">
+                <textarea class="form-control"  name="content" id="content" style="height: 100px"></textarea>
             </div>
+            <button class="btn btn-primary" style="margin-top: 10px;">Post</button>
+        </form>
+
+        <div class="container-xl">
+            <% comments.forEach(comment => { %>
+                <div class="card row" id="comment-card" style="padding: 10px;">
+                    <div class="comment-content" style="height: 50px;">
+                    <%= comment.content %>
+                    </div>
+                    <div class="commented-by" style="font-weight: 100; font-size: small; background-color: aliceblue;" >
+                        Commented by: @<%= comment.createdBy.username %>
+                    </div>
+                </div>
+            <% }) %>
+            
+            
         </div>
-        <% }) %>
-        
-        
-    </div>
     </div>
 
     <%- include('./partials/scripts') %>
