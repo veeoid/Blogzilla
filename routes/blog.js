@@ -1,5 +1,6 @@
 const express = require('express');
 const Blog = require('../models/blog');
+const Comment = require('../models/comment')
 const path = require('path');
 
 // Multer Imports
@@ -25,8 +26,18 @@ router.get('/add-new', (req, res) => {
     })
 })
 
+router.get('/:id', async (req, res) => {
+    const blog = await Blog.findById(req.params.id).populate("createdBy")
+    const comments = await Comment.find({blogId: req.params.id}).populate("createdBy");
+
+    return res.render('blog', {
+        user: req.user,
+        blog,
+        comments,
+    });
+})
+
 router.post('/', upload.single("coverImage"), async (req, res) => {
-    console.log(req.body);
     const {title, body} = req.body;
 
     const blog = await Blog.create({
@@ -37,6 +48,18 @@ router.post('/', upload.single("coverImage"), async (req, res) => {
     })
     return res.redirect(`blog/${blog._id}`)
 });
+
+router.post('/comment/:blogId', async(req, res) => {
+  const {content} = req.body;
+  await Comment.create({
+    content,
+    createdBy: req.user._id,
+    blogId: req.params.blogId,
+  })
+  return res.redirect(`/blog/${req.params.blogId}`)
+})
+
+
 
 
 module.exports = router;

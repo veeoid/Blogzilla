@@ -11,6 +11,7 @@ const BlogSchema = new Schema({
     },
     coverImageURL: {
         type: String,
+        default: './images/default_blog.png',
         required: false,
     },
     createdBy: {
